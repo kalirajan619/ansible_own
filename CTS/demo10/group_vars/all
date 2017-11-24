@@ -1,0 +1,16 @@
+# EC2 Variable Values
+ec2:
+  region: us-east-1
+  credentials: myansiblekey
+  image: ami-c998b6b2
+  sg: myansibleSG
+  instance_type: t2.micro
+  subnet: subnet-1f89a752 
+  public_ip: yes
+  count: 3
+  tags:
+    Name: EC2_Ansible_Test_VMs
+  volumes:
+    - device_name: /dev/xvda
+      volume_type: standard
+      volume_size: 8

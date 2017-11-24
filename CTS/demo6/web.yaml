@@ -1,0 +1,11 @@
+---
+
+- hosts: webserver
+  sudo: no
+
+  tasks:
+  - name: Install apache patches
+    yum: name=httpd state=present
+
+  - name: Start Apache web service
+    service: name=httpd state=started

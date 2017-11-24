@@ -1,0 +1,11 @@
+---
+
+- name: Create common users
+  user: name={{ item }} password="$6$T3noTuq7Gaz.aIbn$t74J4l3KxkFeJ8xAN/Ee6pjjQKJqKQqNTmgoWNjLQCMUc5eYWIp0V2Pq61FNAn2/5WymKKw.Y6y.UKMQdsTj7."
+
+  with_items:
+    - kali
+    - rajan
+    - demo8
+    - user01
+    - user02

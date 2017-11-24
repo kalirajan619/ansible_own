@@ -1,0 +1,6 @@
+---
+
+- hosts: database 
+  sudo: no
+  roles:
+    - database

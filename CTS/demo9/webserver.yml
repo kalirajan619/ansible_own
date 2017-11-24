@@ -1,0 +1,13 @@
+---
+
+- hosts: webserver
+  sudo: no
+
+  pre_tasks:
+    - shell: 'echo "About to begin" '
+
+  roles:
+    - webserver
+  
+  post_tasks:
+    - shell: 'echo "About to end" '

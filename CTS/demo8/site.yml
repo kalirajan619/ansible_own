@@ -1,0 +1,11 @@
+---
+
+ - hosts: all
+   sudo : no
+   roles:
+     - { role: server-common , tags: common }
+
+ - include: webserver.yml
+   tags: web
+ - include: database.yml 
+   tags: db

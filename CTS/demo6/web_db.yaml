@@ -1,0 +1,24 @@
+---
+
+- hosts: webserver
+  sudo: no
+
+  tasks:
+  - name: Install apache patches
+    yum: name=httpd state=present
+
+  - name: Start Apache web service
+    service: name=httpd state=started
+  
+  - name: Disable firewall
+    service: name=firewalld state=stopped
+
+- hosts: database
+  sudo: no
+
+  tasks:
+  - name: Install My SQL patches
+    yum: name=mariadb state=present
+
+  - name: Start My SQL Service
+    service: name=mysql state=started

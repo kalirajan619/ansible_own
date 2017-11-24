@@ -1,0 +1,68 @@
+---
+
+- hosts: webserver
+  sudo: no
+  vars:
+     http_port: 80
+     doc_root: /var/www/html/ansible
+     doc_dir: /anisible
+     dir_check: new
+
+  vars_prompt:
+  - name : username
+    prompt: What is your name ?
+
+  tasks:
+  - name: Install apache patches
+    yum: name=httpd state=present
+    when: ansible_os_family == "RedHat"
+
+  - name: Start Apache web service
+    service: name=httpd state=started
+
+  - name: Deploy the custom apache configuration
+    template: src=templates/httpd.j2 dest=/etc/httpd/conf/httpd.conf
+    notify:
+      - Restart Apache
+
+  - command: ls /var/www/html/kali
+    register: result1
+    ignore_errors: yes
+
+  - file: path=/var/www/html/kali state=directory
+    when: result1|failed
+
+  - name: Create site location
+    file: path={{doc_root}} state=directory
+
+  - name: Deploy site Files
+    template: src=templates/index.j2 dest={{doc_root}}/index.html
+  
+  - command: ls /root/new
+    register: result2
+    ignore_errors: yes
+
+  - debug : msg="Invalid path in ls"
+    when: result2|failed
+  
+  - file: path=/root/{{dir_check}} state=directory
+    when: result2|failed
+
+  - name: Disable firewall for Redhat
+    service: name=firewalld state=stopped
+    when: ansible_os_family == "RedHat"
+
+  - name: Disable Iptables for Debian
+    service: name=iptables state=stopped
+    when: ansible_os_family == "Debian"
+
+  handlers: 
+  - name: Restart Apache
+    service: name=httpd state=restarted
+
+- hosts: database
+  sudo: no
+
+  tasks:
+  - name: Install My SQL patches
+    yum: name=mariadb state=present

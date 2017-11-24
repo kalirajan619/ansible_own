@@ -1,0 +1,9 @@
+---
+
+- name: Stop the firewall CentOS
+  service: name=firewalld state=stopped enabled=False
+  when: ansible_os_family == "RedHat"
+
+- name : Stop Iptables on Ubuntu
+  service: name=ufw state=stopped
+  when: ansible_os_family == "Debian"
